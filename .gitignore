@@ -14,3 +14,9 @@ wheels/
 
 # Models
 output
+
+# mlflow
+artifacts/
+mlruns/
+mlflow.db
+mlruns.db
