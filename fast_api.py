@@ -1,18 +1,19 @@
 from fastapi import FastAPI
-
+from pydantic import BaseModel
+import uvicorn
 
 app = FastAPI()
 
+class HouseFeatures(BaseModel):
+    size: float
+    nb_rooms: int
+    garden: bool
 
-@app.get("/predict")
-def predict():
-    return {"y_pred": 2}
 
-
-def main():
-    import uvicorn
-    uvicorn.run(app, host="localhost", port=8000)
-
+@app.post("/predict")
+def predict_house(features: HouseFeatures):
+    price = features.size * 1000 + features.nb_rooms * 5000
+    return {"y_pred": price}
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(app, host="0.0.0.0", port=8000)
