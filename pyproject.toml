@@ -8,6 +8,7 @@ dependencies = [
     "altair>=5.0.0",
     "fastapi[standard]>=0.128.0",
     "joblib>=1.5.3",
+    "mlflow>=3.9.0",
     "pandas>=2.3.3",
     "scikit-learn>=1.8.0",
     "streamlit>=1.53.1",
