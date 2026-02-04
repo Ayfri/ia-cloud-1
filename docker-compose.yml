@@ -1,5 +1,6 @@
 services:
   api:
+    image: ayfri/ia-cloud-1:latest
     build: .
     env_file: ".env"
     ports:
