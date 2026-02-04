@@ -16,7 +16,7 @@ USER myuser
 
 COPY --from=builder /app/.venv /app/.venv
 
-COPY app ./app
+COPY . .
 
 ENV PATH="/app/.venv/bin:$PATH"
 
@@ -24,4 +24,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 ENV PORT=8050
 ENV HOST=0.0.0.0
 
-CMD uvicorn app.main:app --host $HOST --port $PORT
+CMD uvicorn fast_api:app --host $HOST --port $PORT
