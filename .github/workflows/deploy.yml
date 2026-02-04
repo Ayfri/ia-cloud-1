@@ -28,6 +28,8 @@ jobs:
           context: .
           push: true
           tags: ayfri/ia-cloud-1:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy:
     needs: build-and-push
