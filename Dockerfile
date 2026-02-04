@@ -5,7 +5,9 @@ WORKDIR /app
 
 # Separate for caching
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --compile-bytecode
+ENV UV_LINK_MODE=copy
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev --compile-bytecode
 
 FROM python:3.13-slim
 
