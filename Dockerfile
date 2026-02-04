@@ -20,6 +20,8 @@ COPY . .
 
 ENV PATH="/app/.venv/bin:$PATH"
 
+RUN mkdir -p output && uv run train_model.py
+
 # Default env vars
 ENV PORT=8050
 ENV HOST=0.0.0.0
