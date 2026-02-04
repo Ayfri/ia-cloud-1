@@ -11,12 +11,11 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
-RUN useradd -m myuser
+RUN useradd -m myuser && chown myuser:myuser /app
 USER myuser
 
-COPY --from=builder /app/.venv /app/.venv
-
-COPY . .
+COPY --chown=myuser:myuser --from=builder /app/.venv /app/.venv
+COPY --chown=myuser:myuser . .
 
 ENV PATH="/app/.venv/bin:$PATH"
 
