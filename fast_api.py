@@ -1,8 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
+import joblib
+import pandas as pd
 
 app = FastAPI()
+
+model = joblib.load("output/regression.joblib")
 
 class HouseFeatures(BaseModel):
     size: float
@@ -12,7 +16,8 @@ class HouseFeatures(BaseModel):
 
 @app.post("/predict")
 def predict_house(features: HouseFeatures):
-    price = features.size * 1000 + features.nb_rooms * 5000
+    input_data = pd.DataFrame([[features.size, features.nb_rooms, features.garden]], columns=['size', 'nb_rooms', 'garden'])
+    price = model.predict(input_data)[0]
     return {"y_pred": price}
 
 if __name__ == "__main__":
