@@ -17,8 +17,6 @@ mlflow.db
 mlruns.db
 
 # Data & Temp
-data/
-*.csv
 *.joblib
 .env
 .pytest_cache/
