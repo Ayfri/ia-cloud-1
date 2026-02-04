@@ -1,5 +1,24 @@
+# Git & Meta
 .git
-.venv
-__pycache__
-output
-notebooks
+.gitignore
+README.md
+
+# Python & UV
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.uv/
+
+# MLflow
+artifacts/
+mlruns/
+mlflow.db
+mlruns.db
+
+# Data & Temp
+data/
+*.csv
+*.joblib
+.env
+.pytest_cache/
