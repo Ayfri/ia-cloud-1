@@ -21,10 +21,4 @@ COPY --chown=myuser:myuser . .
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-RUN mkdir -p output && python train_model.py
-
-# Default env vars
-ENV PORT=8050
-ENV HOST=0.0.0.0
-
 CMD ["uvicorn", "fast_api:app", "--host", "0.0.0.0", "--port", "8050"]
