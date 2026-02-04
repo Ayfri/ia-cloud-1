@@ -18,7 +18,7 @@ services:
       - "5000:5000"
     environment:
       - MLFLOW_HOST=0.0.0.0
-    command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root /app/mlruns --host 0.0.0.0
+    command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root /app/mlruns --host 0.0.0.0 --allowd-hosts *
     volumes:
       - ./mlruns:/app/mlruns
       - ./mlflow.db:/mlflow.db
