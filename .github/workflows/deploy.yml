@@ -59,5 +59,11 @@ jobs:
           script: |
             cd /home/${{ secrets.VPS_USER }}/${{ secrets.VPS_USER_DIR }}
 
+            # Ensure mlruns directory and mlflow.db exist with proper permissions
+            mkdir -p mlruns
+            touch mlflow.db
+            sudo chmod 777 mlflow.db
+            sudo chmod -R 777 mlruns
+
             sudo docker compose pull
             sudo docker compose up -d --remove-orphans
