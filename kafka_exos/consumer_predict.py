@@ -1,9 +1,9 @@
 import sys
 import json
 from kafka import KafkaConsumer, KafkaProducer, TopicPartition
-from data import Data
-from constants import BOOTSTRAP_SERVERS, INPUT_TOPIC, OUTPUT_TOPIC
-from model_loader import load_model, predict
+from kafka_exos.data import Data
+from kafka_exos.constants import BOOTSTRAP_SERVERS, INPUT_TOPIC, OUTPUT_TOPIC
+from kafka_exos.model_loader import load_model, predict
 
 model = load_model()
 if not model:

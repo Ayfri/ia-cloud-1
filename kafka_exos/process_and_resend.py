@@ -1,7 +1,7 @@
 from kafka import KafkaProducer, KafkaConsumer
 import json
-from data import Data
-from constants import BOOTSTRAP_SERVERS, INPUT_TOPIC, OUTPUT_TOPIC
+from kafka_exos.data import Data
+from kafka_exos.constants import BOOTSTRAP_SERVERS, INPUT_TOPIC, OUTPUT_TOPIC
 
 producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVERS)
 consumer = KafkaConsumer(

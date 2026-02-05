@@ -1,8 +1,8 @@
 import json
 import random
 from kafka import KafkaProducer
-from data import Data
-from constants import BOOTSTRAP_SERVERS, INPUT_TOPIC
+from kafka_exos.data import Data
+from kafka_exos.constants import BOOTSTRAP_SERVERS, INPUT_TOPIC
 
 producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVERS)
 

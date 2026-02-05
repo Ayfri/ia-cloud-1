@@ -1,6 +1,6 @@
 import time
-from kafka.admin import KafkaAdminClient, NewPartitions
-from constants import BOOTSTRAP_SERVERS, INPUT_TOPIC, OUTPUT_TOPIC
+from kafka_exos.admin import KafkaAdminClient, NewPartitions
+from kafka_exos.constants import BOOTSTRAP_SERVERS, INPUT_TOPIC, OUTPUT_TOPIC
 
 time.sleep(2)
 

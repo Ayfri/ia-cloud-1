@@ -1,7 +1,7 @@
 import sys
 import json
 from kafka import KafkaConsumer, TopicPartition
-from constants import BOOTSTRAP_SERVERS, OUTPUT_TOPIC
+from kafka_exos.constants import BOOTSTRAP_SERVERS, OUTPUT_TOPIC
 
 partition_number = int(sys.argv[1]) if len(sys.argv) > 1 else 0
 

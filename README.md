@@ -41,7 +41,7 @@ uv run streamlit run model_app.py
 ### Setup: Create Partitions
 Initialize Kafka partitions for both input and output topics:
 ```bash
-uv run .\kafka\create_partitions.py
+uv run -m kafka_exos.create_partitions
 ```
 This creates 2 partitions per topic to enable parallel processing and prevent duplicate message handling.
 
@@ -50,12 +50,12 @@ This creates 2 partitions per topic to enable parallel processing and prevent du
 
 1. Start consumer (partition 0):
 ```bash
-uv run .\kafka\consumer.py 0
+uv run -m kafka_exos.consumer 0
 ```
 
 2. Send message:
 ```bash
-uv run .\kafka\producer.py
+uv run -m kafka_exos.producer
 ```
 
 3. Verify message received on assigned partition.
@@ -71,12 +71,12 @@ Each consumer handles one partition independently:
 
 Terminal 1 (partition 0):
 ```bash
-uv run .\kafka\consumer_predict.py 0
+uv run -m kafka_exos.consumer_predict 0
 ```
 
 Terminal 2 (partition 1):
 ```bash
-uv run .\kafka\consumer_predict.py 1
+uv run -m kafka_exos.consumer_predict 1
 ```
 
 **What they do**:
@@ -91,18 +91,18 @@ View prediction results:
 
 Terminal 3 (partition 0):
 ```bash
-uv run .\kafka\consumer_view_predictions.py 0
+uv run -m kafka_exos.consumer_view_predictions 0
 ```
 
 Terminal 4 (partition 1):
 ```bash
-uv run .\kafka\consumer_view_predictions.py 1
+uv run -m kafka_exos.consumer_view_predictions 1
 ```
 
 #### Step 3: Send Data for Prediction
 Send multiple messages (they route to random partitions):
 ```bash
-uv run .\kafka\producer_multi.py 5
+uv run -m kafka_exos.producer_multi 5
 ```
 
 **Result**:
