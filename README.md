@@ -36,6 +36,97 @@ The API will be available at `http://localhost:8000`. You can test the `/predict
 uv run streamlit run model_app.py
 ```
 
+## Kafka Workflows
+
+### Setup: Create Partitions
+Initialize Kafka partitions for both input and output topics:
+```bash
+uv run .\kafka\create_partitions.py
+```
+This creates 2 partitions per topic to enable parallel processing and prevent duplicate message handling.
+
+### Workflow 1: Single Message Production & Consumption
+**Purpose**: Test basic producer-consumer interaction with partition routing.
+
+1. Start consumer (partition 0):
+```bash
+uv run .\kafka\consumer.py 0
+```
+
+2. Send message:
+```bash
+uv run .\kafka\producer.py
+```
+
+3. Verify message received on assigned partition.
+
+---
+
+### Workflow 2: ML Model Predictions (Full Pipeline)
+
+**Purpose**: Production ML inference pipeline - predictions should be processed only once across multiple consumers.
+
+#### Step 1: Start Prediction Consumers
+Each consumer handles one partition independently:
+
+Terminal 1 (partition 0):
+```bash
+uv run .\kafka\consumer_predict.py 0
+```
+
+Terminal 2 (partition 1):
+```bash
+uv run .\kafka\consumer_predict.py 1
+```
+
+**What they do**:
+- Load ML model at startup
+- Listen on their assigned partition
+- Receive raw input data
+- Run predictions using the trained model
+- Send results to `OUTPUT_TOPIC`
+
+#### Step 2 (Optional): Monitor Predictions
+View prediction results:
+
+Terminal 3 (partition 0):
+```bash
+uv run .\kafka\consumer_view_predictions.py 0
+```
+
+Terminal 4 (partition 1):
+```bash
+uv run .\kafka\consumer_view_predictions.py 1
+```
+
+#### Step 3: Send Data for Prediction
+Send multiple messages (they route to random partitions):
+```bash
+uv run .\kafka\producer_multi.py 5
+```
+
+**Result**:
+- Each message goes to partition 0 or 1 randomly
+- Only the corresponding consumer receives and processes it
+- Predictions are made and sent to `OUTPUT_TOPIC`
+- No duplicate processing even with multiple consumers
+- Enables horizontal scaling of prediction workers
+
+---
+
+## Architecture Overview
+
+```
+Producer (random partition)
+    ↓
+Input Topic [Partition 0, Partition 1]
+    ↓
+Consumer Predict 0 ─→ Load Model ─→ Predict ─→ Output Topic [Partition 0]
+Consumer Predict 1 ─→ Load Model ─→ Predict ─→ Output Topic [Partition 1]
+    ↓
+Consumer View (optional monitoring)
+```
+
 ## Docker
 Build and run the entire stack using Docker Compose:
 ```bash

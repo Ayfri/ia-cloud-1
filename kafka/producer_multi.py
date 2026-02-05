@@ -1,3 +1,4 @@
+import sys
 import json
 import random
 from kafka import KafkaProducer
@@ -13,6 +14,16 @@ def send_data(data: Data):
     producer.flush()
 
 if __name__ == '__main__':
-    data = Data(data=[[1500, 3, 1]])
-    send_data(data)
+    num_messages = int(sys.argv[1]) if len(sys.argv) > 1 else 1
+    print(f"Sending {num_messages} message(s)...\n")
+
+    for _ in range(num_messages):
+        size = random.randint(800, 3000)
+        nb_rooms = random.randint(1, 6)
+        garden = random.randint(0, 1)
+        data = Data(data=[[size, nb_rooms, garden]])
+        send_data(data)
+        print()
+
     producer.close()
+    print("Done!")
